@@ -8,11 +8,15 @@ export class LearningDataLogger {
     private tables: {teacherName: string, table: HTMLTableElement}[];
     private memory: HTMLTableElement;
 
-    constructor(element: string | HTMLElement, private academy: Academy) {
-        if(typeof element == "string") {
-            this.parent = document.getElementById(element);
-        } else {
-            this.parent = element;
+    constructor(element: string | HTMLElement, private academy: Academy, document: HTMLElement) {
+        this.document = document;
+        
+        if (this.document){
+            if(typeof element == "string") {
+                this.parent = this.document.getElementById(element);
+            } else {
+                this.parent = element;
+            }
         }
 
         this.tables = [];
@@ -23,7 +27,7 @@ export class LearningDataLogger {
     }
 
     createMemoryTable(): void {
-        this.memory = document.createElement('table');
+        this.memory = this.document.createElement('table');
         const thead = <HTMLTableSectionElement> this.memory.createTHead();
         const tbody = <HTMLTableSectionElement> this.memory.createTBody();
 
@@ -43,7 +47,7 @@ export class LearningDataLogger {
     }
 
     createTeacherTable(teacherName: string): void {
-        const table = document.createElement('table');
+        const table = this.document.createElement('table');
         const thead = <HTMLTableSectionElement> table.createTHead();
         const tbody = <HTMLTableSectionElement> table.createTBody();
 
